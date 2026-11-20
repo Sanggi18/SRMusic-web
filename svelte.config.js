@@ -22,7 +22,10 @@ const config = {
 		// repo yet — warn instead so the template builds out of the box.
 		prerender: {
 			handleHttpError: ({ path, message }) => {
-				if (path.startsWith('/screenshots/')) {
+				// NOTE: path includes the BASE_PATH prefix, e.g.
+				// /SRMusic-web/screenshots/player.webp — so match on
+				// '/screenshots/' anywhere in the path, not the start.
+				if (path.includes('/screenshots/')) {
 					console.warn(`missing screenshot (add it to static/screenshots/): ${path}`);
 					return;
 				}
